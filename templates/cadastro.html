@@ -51,8 +51,30 @@
     </form>
   </div>
 </div>
+{% endblock %}
 
+{% block scripts %}
 <script>
+// Função para mostrar mensagem temporária
+function mostrarMensagemCadastro(texto, tipo='success') {
+    const msgDiv = document.getElementById('mensagemCadastro');
+    const div = document.createElement('div');
+    div.className = `alert alert-${tipo} alert-dismissible fade show`;
+    div.role = 'alert';
+    div.innerHTML = `
+        ${texto}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    msgDiv.innerHTML = ''; // Limpa mensagem antiga
+    msgDiv.appendChild(div);
+
+    
+    setTimeout(() => {
+        const bsAlert = bootstrap.Alert.getOrCreateInstance(div);
+        bsAlert.close();
+    }, 2000);
+}
+
 document.getElementById('cadastroForm').addEventListener('submit', async e => {
     e.preventDefault();
 
@@ -61,24 +83,17 @@ document.getElementById('cadastroForm').addEventListener('submit', async e => {
     const resp = await fetch('/cadastrar', {
         method: 'POST',
         body: fd,
-        headers: { 'X-Requested-With': 'XMLHttpRequest' } // identifica AJAX
+        headers: { 'X-Requested-With': 'XMLHttpRequest' } 
     });
 
     const data = await resp.json();
 
-    // Exibe a mensagem de retorno
-    const msgDiv = document.getElementById('mensagemCadastro');
-    msgDiv.innerHTML = `<div class="alert alert-${data.sucesso ? 'success' : 'danger'} alert-dismissible fade show" role="alert">
-                          ${data.mensagem}
-                          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>`;
+    mostrarMensagemCadastro(data.mensagem, data.sucesso ? 'success' : 'danger');
 
-    // Atualiza a tabela de modelos, se existir
     if ($.fn.DataTable.isDataTable('#tblModelos')) {
         $('#tblModelos').DataTable().ajax.reload(null, false);
     }
 
-    // Limpa o formulário se sucesso
     if (data.sucesso) e.target.reset();
 });
 </script>

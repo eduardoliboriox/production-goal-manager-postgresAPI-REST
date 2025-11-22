@@ -110,15 +110,24 @@ $(document).ready(function(){
         });
   }
 
+  // Função para mostrar mensagens temporárias
+  function mostrarMensagem(texto, tipo='success') {
+      const div = $(`
+        <div class="alert alert-${tipo} alert-dismissible fade show" role="alert">
+          ${texto}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      `);
+      $('#mensagemModelos').html(div);
+      setTimeout(() => div.alert('close'), 2000); 
+  }
+
   // EDITAR
   $('#editarForm').on('submit', async function(e){
       e.preventDefault();
       const fd = new FormData(this);
       await fetch('/editar', {method:'POST', body:fd});
-      $('#mensagemModelos').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                     Modelo atualizado com sucesso!
-                                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                   </div>`);
+      mostrarMensagem('Modelo atualizado com sucesso!', 'success');
       tabela.ajax.reload(null, false);
       atualizarSelects();
   });
@@ -128,15 +137,11 @@ $(document).ready(function(){
       e.preventDefault();
       const fd = new FormData(this);
       await fetch('/excluir', {method:'POST', body:fd});
-      $('#mensagemModelos').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                     Modelo excluído com sucesso!
-                                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                   </div>`);
+      mostrarMensagem('Modelo excluído com sucesso!', 'danger');
       tabela.ajax.reload(null, false);
       atualizarSelects();
   });
 
 });
-
 </script>
 {% endblock %}
