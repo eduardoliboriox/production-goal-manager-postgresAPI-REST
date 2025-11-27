@@ -54,7 +54,19 @@
         <input class="form-control form-control-lg" type="number" name="minutos" value="60" required>
       </div>
 
-      <div class="col-md-4 d-flex align-items-end">
+    <div class="col-md-4" id="campoBlank" style="display:none;">
+        <label class="form-label fw-semibold">Blank (opcional)</label>
+        <input class="form-control form-control-lg" type="number" name="blank" value="0">
+    </div>
+
+  <div class="col-md-4 d-flex align-items-center">
+      <div class="form-check form-switch mt-4">
+          <input class="form-check-input" type="checkbox" id="usarBlank" name="usar_blank">
+          <label class="form-check-label fw-semibold" for="usarBlank">Considerar Blank</label>
+      </div>
+  </div>
+
+  <div class="col-md-4 d-flex align-items-end">
         <button class="btn btn-primary btn-lg w-100" type="submit">
           <i class="bi bi-play-circle"></i> Calcular
         </button>
@@ -68,30 +80,48 @@
 </div>
 
 <script>
-document.getElementById('calcForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const fd = new FormData(e.target);
-  const resp = await fetch('/calcular_meta', {method:'POST', body: fd});
-  const data = await resp.json();
-  document.getElementById('resultadoCalc').innerHTML = data.resultado;
-});
-
 document.getElementById('calcRapidoForm').addEventListener('submit', e => {
   e.preventDefault();
 
-  const meta_hora = Number(e.target.meta_hora.value);
-  const minutos = Number(e.target.minutos.value);
+  const meta_hora  = Number(e.target.meta_hora.value);
+  const minutos    = Number(e.target.minutos.value);
+  const blank      = Number(e.target.blank.value);
+  const usarBlank  = document.getElementById("usarBlank").checked;
 
+  // cálculo bruto normal
   let bruto = (meta_hora / 60) * minutos;
-  let decimal = bruto - Math.floor(bruto);
-  let resultado = decimal < 0.50 
-                  ? Math.floor(bruto) 
-                  : Math.ceil(bruto);
 
+  // sem blank → cálculo normal (mantém seu arredondamento atual)
+  if (!usarBlank || blank <= 0) {
+      let decimal = bruto - Math.floor(bruto);
+      let resultado = decimal < 0.50 
+                      ? Math.floor(bruto) 
+                      : Math.ceil(bruto);
 
-  document.getElementById('resultadoCalcRapido').innerHTML = 
-    "Resultado: <strong>" + resultado.toFixed(0) + "</strong>";
+      document.getElementById('resultadoCalcRapido').innerHTML =
+        "Resultado: <strong>" + resultado + "</strong>";
+      return;
+  }
+
+  // --- COM BLANK LIGADO ---
+  // Ajuste para múltiplos do blank
+  let resultado_ajustado = Math.ceil(bruto / blank) * blank;
+
+  document.getElementById('resultadoCalcRapido').innerHTML =
+    "Resultado Ajustado: <strong>" + resultado_ajustado + "</strong>";
 });
+
+  // Mostrar ou ocultar o campo Blank
+  document.getElementById("usarBlank").addEventListener("change", function () {
+      const campoBlank = document.getElementById("campoBlank");
+      if (this.checked) {
+          campoBlank.style.display = "block";
+      } else {
+          campoBlank.style.display = "none";
+      }
+});
+
 </script>
+
 
 {% endblock %}
