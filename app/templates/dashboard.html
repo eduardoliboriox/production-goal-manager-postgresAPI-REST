@@ -28,16 +28,16 @@
   <div class="card p-3">
     <h6>Atalhos</h6>
     <div class="d-flex gap-2 flex-wrap mt-2">
-      <a href="{{ url_for('cadastro') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Novo Modelo</a>
-      <a href="{{ url_for('modelos') }}" class="btn btn-outline-primary"><i class="bi bi-table"></i> Ver Modelos</a>
-      <a href="{{ url_for('calculo') }}" class="btn btn-success"><i class="bi bi-calculator"></i> Calcular Meta</a>
+      <a href="{{ url_for('pages.cadastro') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Novo Modelo</a>
+      <a href="{{ url_for('pages.modelos') }}" class="btn btn-outline-primary"><i class="bi bi-table"></i> Ver Modelos</a>
+      <a href="{{ url_for('pages.calculo') }}" class="btn btn-success"><i class="bi bi-calculator"></i> Calcular Meta</a>
     </div>
   </div>
 </div>
 
 <script>
 async function fetchStats() {
-  const resp = await fetch('/listar');
+  const resp = await fetch('/api/listar');
   const data = await resp.json();
   const modelos = data.data || []; 
 

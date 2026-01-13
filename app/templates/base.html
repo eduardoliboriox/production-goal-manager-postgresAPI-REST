@@ -23,20 +23,20 @@
     <!-- SIDEBAR -->
     <nav id="sidebar" class="sidebar p-3">
       <div class="sidebar-brand text-center mb-4">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Venttos" height="56">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Venttos" height="56">
 
       </div>
 
       <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('pages.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
 
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('cadastro') }}"><i class="bi bi-plus-square me-2"></i> Cadastro</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('pages.cadastro') }}"><i class="bi bi-plus-square me-2"></i> Cadastro</a></li>
 
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('modelos') }}"><i class="bi bi-table me-2"></i> Modelos</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('pages.modelos') }}"><i class="bi bi-table me-2"></i> Modelos</a></li>
 
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('calculo') }}"><i class="bi bi-calculator me-2"></i> Calcular Meta</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('pages.calculo') }}"><i class="bi bi-calculator me-2"></i> Calcular Meta</a></li>
 
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('perdas') }}"><i class="bi bi-exclamation-triangle me-2"></i> Calcular Perda</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('pages.perdas') }}"><i class="bi bi-exclamation-triangle me-2"></i> Calcular Perda</a></li>
       </ul>
 
       <div class="mt-auto text-center small text-muted">

@@ -77,7 +77,7 @@ $(document).ready(function(){
 
   // Inicializa DataTable
   const tabela = $('#tblModelos').DataTable({
-      ajax: '/listar',
+      ajax: '/api/listar',
       columns: [
           {data: 'codigo'},
           {data: 'cliente'},
@@ -94,7 +94,7 @@ $(document).ready(function(){
 
   // Atualiza selects após ação
   function atualizarSelects() {
-      fetch('/listar')
+      fetch('/api/listar')
         .then(resp => resp.json())
         .then(data => {
             const editar = $('#selectEditar');
@@ -126,7 +126,7 @@ $(document).ready(function(){
   $('#editarForm').on('submit', async function(e){
       e.preventDefault();
       const fd = new FormData(this);
-      await fetch('/editar', {method:'POST', body:fd});
+      await fetch('/api/editar', {method:'POST', body:fd});
       mostrarMensagem('Modelo atualizado com sucesso!', 'success');
       tabela.ajax.reload(null, false);
       atualizarSelects();
@@ -136,7 +136,7 @@ $(document).ready(function(){
   $('#excluirForm').on('submit', async function(e){
       e.preventDefault();
       const fd = new FormData(this);
-      await fetch('/excluir', {method:'POST', body:fd});
+      await fetch('/api/excluir', {method:'POST', body:fd});
       mostrarMensagem('Modelo excluído com sucesso!', 'danger');
       tabela.ajax.reload(null, false);
       atualizarSelects();
