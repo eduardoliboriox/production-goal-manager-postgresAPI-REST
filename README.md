@@ -1,82 +1,107 @@
-# Sistema de Metas - Venttos Electronics
-
-Sistema de gerenciamento de metas de produção desenvolvido em **Python + Flask**.  
-Permite cadastrar modelos, calcular metas ajustadas por pessoas e calcular perdas de produção.
 Visualize a aplicação real através do link no final deste README.md.
-
----
-
-## 🔹 Funcionalidades
-
-- Dashboard com resumo de modelos cadastrados, média de meta/hora e último cadastro.
-- Cadastro de modelos (código, cliente, setor, meta/hora, pessoas padrão).
-- Listagem de modelos com DataTables.
-- Edição e exclusão de modelos.
-- Cálculo de meta ajustada por pessoas e tempo.
-- Cálculo de perda de produção.
-- Layout responsivo com **Bootstrap 5**.
-
----
-
-## 🔹 Tecnologias
-
-- Python 3.11+
-- Flask 2.3+
-- SQLite (banco de dados local)
-- HTML5, CSS3, Bootstrap 5
-- DataTables (via CDN)
-- JavaScript (Fetch API + AJAX)
 
 ---
 
 ## 🔹 Estrutura do projeto
 
 ```
-Sistema de Metas - Venttos/
-├─ static/
-│   ├─ logo.png 
+project/
+├─ app/
+│   ├─ __init__.py            # create_app()
+│   ├─ config.py              # Config / env
+│   ├─ extensions.py          # DB (psycopg, etc)
+│   │
+│   ├─ routes/
+│   │   ├─ __init__.py        # registra blueprints
+│   │   ├─ pages.py           # rotas HTML
+│   │   └─ api.py             # rotas REST (JSON)
+│   │
+│   ├─ services/              # regras de negócio
+│   │   ├─ __init__.py        # pacote services (NÃO blueprint)
+│   │   └─ __init__.py
+│   │
+│   ├─ repositories/          # acesso ao banco (SQL)
+│   │   ├─ __init__.py        # pacote repositories
+│   │   └─ modelos_repository.py
+│   │
+│   ├─ templates/             # Jinja2
+│   │   ├─ base.html
+│   │   ├─ cadastro.html
+│   │   ├─ calcular.html
+│   │   ├─ dashboard.html
+│   │   ├─ modelos.html
+│   │   └─ perdas.html
+│   │
+│   └─ static/                # arquivos estáticos
 │       ├─ css/
-│            └─ style.css  
+│       │   └─ style.css
 │       ├─ js/
-│            └─ main.js  
-├─ templates/
-│  ├─ base.html
-│  ├─ cadastro.html
-│  ├─ dashboard.html
-│  ├─ modelos.html
-│  ├─ calcular.html
-│  ├─ perdas.html
-├─ app.py
-├─ producao.db
-├─ ping.py
-├─ Profile   
-├─ README.md
-├─ README.EN.md   
-├─ requirements.txt 
+│       │   └─ main.js
+│       ├─ images/
+│       │   ├─ banners/
+│       │   ├─ logos/
+│       │   └─ users/
+│       └─ fonts/
+│           └─ inter.woff2
+│
+├─ migrations/                # Alembic / Flask-Migrate
+├─ tests/                     # pytest
+├─ run.py                     # entrypoint da aplicação
+├─ requirements.txt
+├─ Procfile                   # Cloud - Railway
+├─ README.md                  # Documentação principal
+├─ .env                       # NÃO versionar
+├─ .gitignore
+└─ pyproject.toml             # opcional
 ```
 ---
 
-## 📁 Como Rodar
+## ⚙️ Tecnologias Utilizadas
+* Python (Flask)
+* HTML5
+* CSS3
+* JavaScript (Vanilla)
+* Jinja2
+* LocalStorage
 
-```bash
-pip install -r requirements.txt
-python app.py
+---
+
+## ▶️ Como Rodar o Projeto
+
 ```
+1. Clonar o repositório
+   git clone https://github.com/seu-usuario/seu-repositorio.git
+   cd seu-repositorio
+
+2. Criar e ativar o ambiente virtual
+   python -m venv venv
+   venv\Scripts\activate
+
+3. Instalar as dependências
+   pip install -r requirements.txt
+
+4. Configurar variáveis de ambiente
+   Crie um arquivo .env na raiz do projeto:
+   FLASK_ENV=development
+   SECRET_KEY=supersecretkey
+   DATABASE_URL=postgresql://user:password@localhost:5432/dbname
+
+5. Rodar a aplicação
+   python run.py
+
+   Depois, acessar no navegador:
+   http://127.0.0.1:5000
+```
+---
+
+## 📌 Observações
+* O sistema não utiliza login
+* Os dados da compra atual ficam salvos localmente no navegador
+* O cadastro de produtos é persistido no banco de dados
+* Projeto ideal para uso pessoal ou familiar
 
 ---
 
-## 🔗 Acesso ao Sistema (Deploy)
-
-O sistema está disponível online pelo Render:
-Uso contramedidas até na versão free para a página não fechar por inatividade, caso feche, aguarde 50 segundos.
-
-➡️ **https://production-goal-manager-venttos.onrender.com**
-
----
-
-## 👨‍💻 Autor
-
-* Desenvolvido por **Eduardo Libório**
-* 📧 [eduardosoleno@protonmail.com](mailto:eduardosoleno@protonmail.com)
-
----
+## 👨‍💻 Autor 
+Desenvolvido por Eduardo Libório
+📧 eduardosoleno@protonmail.com
