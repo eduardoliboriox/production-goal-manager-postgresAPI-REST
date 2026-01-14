@@ -49,5 +49,5 @@ def calcular_perda_producao(meta_hora, producao_real):
     minutos_perdidos = int((1 - proporcao) * 60)
     segundos = 0
 
-    return f"{minutos_perdidos} minutos e {segundos:02d} segundos"
+    return f" Perda de Produção: {minutos_perdidos} minutos e {segundos:02d} segundos"
 
