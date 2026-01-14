@@ -36,6 +36,7 @@
 </div>
 {% endif %}
 
+<!--
 <script>
 document.getElementById('perdaForm').addEventListener('submit', async e => {
   e.preventDefault();
@@ -44,5 +45,25 @@ document.getElementById('perdaForm').addEventListener('submit', async e => {
   const data = await resp.json();
   document.getElementById('resultadoPerda').innerHTML = data.resultado;
 });
+</script>-->
+
+<script>
+document.getElementById('perdaForm').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const fd = new FormData(e.target);
+  const resp = await fetch('/api/calcular_perda', {
+    method: 'POST',
+    body: fd
+  });
+
+  const data = await resp.json();
+
+  document.getElementById('resultadoPerda').innerHTML = `
+    ⏱️ <strong>Tempo perdido:</strong> ${data.tempo_perdido}<br>
+    📦 <strong>Peças faltantes:</strong> ${data.pecas_faltantes}
+  `;
+});
 </script>
+
 {% endblock %}
