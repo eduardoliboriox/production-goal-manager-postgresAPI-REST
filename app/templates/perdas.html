@@ -54,7 +54,7 @@ document.getElementById('perdaForm').addEventListener('submit', async e => {
   const data = await resp.json();
 
   const textoResultado =
-    `Tempo perdido: ${data.tempo_perdido} | ` +
+    `Perda de Produção: ${data.tempo_perdido} | ` +
     `Peças faltantes: ${data.pecas_faltantes}`;
 
   // HTML apenas
