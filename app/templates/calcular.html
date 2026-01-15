@@ -189,10 +189,10 @@ document.getElementById('smtForm').addEventListener('submit', async (e) => {
     return;
   }
 
-  document.getElementById('resultadoSMT').innerHTML = `
+  document.getElementById("resultadoSMT").innerHTML = `
     Meta/Hora: <strong>${data.meta_hora}</strong><br>
-    Meta Teórica: ${data.meta_teorica}<br>
-    Meta c/ Perda: ${data.meta_com_perda}
+    Meta Teórica: <strong>${data.meta_teorica}</strong><br>
+    Meta c/ Perda: <strong>${data.meta_com_perda}</strong>
   `;
 });
 </script>
