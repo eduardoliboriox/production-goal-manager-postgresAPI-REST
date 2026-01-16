@@ -73,15 +73,18 @@
       </div>
     </form>
    
-      <hr class="my-5">
+    <div id="resultadoCalcRapido" class="mt-4 p-3 border rounded shadow-sm bg-light text-center fw-semibold"></div>
+  </div>
+
+<hr class="my-5">
 
 <div class="card shadow-sm p-4">
   <h5 class="mb-4">
-    <i class="bi bi-cpu-fill text-danger"></i>
+    <i class="bi bi-stopwatch-fill text-danger"></i>
     Cálculo SMT (Manual / Cronômetro)
   </h5>
 
-  <form id="smtForm" class="row g-3">
+  <form id="smtForm" class="row g-4">
 
     <div class="col-md-4">
       <label class="form-label fw-semibold">Tempo de montagem (s)</label>
@@ -109,25 +112,29 @@
     </div>
   </form>
 
-  <div id="resultadoSMT" class="mt-4 p-3 border rounded shadow-sm bg-light text-center fw-semibold"></div>
+  <div id="resultadoSMT"
+       class="mt-4 p-3 border rounded bg-light text-center fw-semibold">
+  </div>
+</div>
 
-  <hr class="my-4">
+<hr class="my-5">
 
-  <div class="card shadow-sm p-4">
+<div class="card shadow-sm p-4">
   <h5 class="mb-4">
-    <i class="bi bi-arrow-left-right text-danger"></i>
-    Cálculo SMT Inverso (Meta Hora → Tempo de Montagem)
+    <i class="bi bi-arrow-left-right text-primary"></i>
+    Cálculo SMT Inverso 
   </h5>
 
-  <form id="smtInversoForm" class="row g-3 mt-2">
+  <form id="smtInversoForm" class="row g-4">
+
     <div class="col-md-6">
-      <label class="form-label">Meta Hora</label>
-      <input id="metaHoraInv" class="form-control form-control-lg" type="number">
+      <label class="form-label fw-semibold">Meta por hora</label>
+      <input id="metaHoraInv" class="form-control form-control-lg" type="number" required>
     </div>
 
     <div class="col-md-6">
-      <label class="form-label">Blank</label>
-      <input id="blankInv" class="form-control form-control-lg" type="number">
+      <label class="form-label fw-semibold">Blank</label>
+      <input id="blankInv" class="form-control form-control-lg" type="number" required>
     </div>
 
     <div class="col-12">
@@ -137,12 +144,10 @@
     </div>
   </form>
 
-  <div id="resultadoInverso" class="mt-3 text-center fw-semibold"></div>
-</div>
-
-
-    <div id="resultadoCalcRapido" class="mt-4 p-3 border rounded shadow-sm bg-light text-center fw-semibold"></div>
+  <div id="resultadoInverso"
+       class="mt-4 p-3 border rounded bg-light text-center fw-semibold">
   </div>
+</div>
 
 </div>
 
