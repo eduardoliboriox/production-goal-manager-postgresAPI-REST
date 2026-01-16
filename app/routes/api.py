@@ -46,6 +46,36 @@ def api_calcular_tempo_smt():
 
     return jsonify(calcular_tempo_smt_inverso(meta, blank))
 
+@bp.route("/modelos/calculo_rapido", methods=["POST"])
+def api_calculo_rapido():
+    try:
+        meta_hora = float(request.form.get("meta_hora"))
+        minutos = float(request.form.get("minutos"))
+        blank = request.form.get("blank")
+
+        if blank:
+            blank = int(blank)
+        else:
+            blank = None
+
+        resultado = modelos_service.calculo_rapido(
+            meta_hora=meta_hora,
+            minutos=minutos,
+            blank=blank
+        )
+
+        return jsonify({
+            "sucesso": True,
+            "dados": resultado
+        })
+
+    except Exception as e:
+        return jsonify({
+            "sucesso": False,
+            "erro": "Erro no cálculo rápido"
+        }), 400
+
+
 
 
 
