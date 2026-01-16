@@ -16,6 +16,7 @@ def listar_modelos():
             """)
             return cur.fetchall()
 
+
 def inserir(dados):
     with get_db() as conn:
         with conn.cursor() as cur:

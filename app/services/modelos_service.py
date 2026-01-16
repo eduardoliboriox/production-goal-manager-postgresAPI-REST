@@ -4,8 +4,18 @@ import math
 def listar_codigos():
     return modelos_repository.listar_codigos()
 
-def listar_modelos():
-    return modelos_repository.listar_modelos()
+def listar():
+    modelos = modelos_repository.listar_modelos()
+    return [
+        {
+            "codigo": m["codigo"],
+            "cliente": m["cliente"],
+            "setor": m["setor"],
+            "meta": float(m["meta"]),
+            "fase": m["fase"]
+        }
+        for m in modelos
+    ]
 
 def cadastrar_modelo(dados):
     try:
