@@ -14,7 +14,9 @@ def listar_modelos():
                     codigo,
                     cliente,
                     setor,
-                    meta,
+                    meta_padrao,
+                    pessoas_padrao,
+                    tempo_montagem,
                     fase
                 FROM modelos
                 ORDER BY codigo
@@ -25,13 +27,19 @@ def inserir(dados):
     with get_db() as conn:
         with conn.cursor() as cur:
             cur.execute("""
-                INSERT INTO modelos (codigo, cliente, setor, meta, fase)
-                VALUES (%s, %s, %s, %s, %s)
+                INSERT INTO modelos (
+                    codigo, cliente, setor,
+                    meta_padrao, pessoas_padrao,
+                    tempo_montagem, fase
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
             """, (
                 dados["codigo"],
                 dados["cliente"],
                 dados["setor"],
-                dados["meta"],
+                dados["meta_padrao"],
+                dados["pessoas_padrao"],
+                dados.get("tempo_montagem"),
                 dados["fase"]
             ))
         conn.commit()

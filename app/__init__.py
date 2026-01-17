@@ -24,9 +24,12 @@ def criar_tabelas(app):
                         codigo TEXT UNIQUE NOT NULL,
                         cliente TEXT NOT NULL,
                         setor TEXT NOT NULL,
-                        meta NUMERIC NOT NULL,
-                        fase TEXT NOT NULL
+                        meta_padrao NUMERIC,
+                        pessoas_padrao INTEGER,
+                        tempo_montagem NUMERIC,
+                        fase TEXT
                     );
                 """)
+            conn.commit()
 
 app = create_app()
