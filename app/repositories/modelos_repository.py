@@ -28,20 +28,24 @@ def inserir(dados):
         with conn.cursor() as cur:
             cur.execute("""
                 INSERT INTO modelos (
-                    codigo, cliente, setor,
-                    meta_padrao, pessoas_padrao,
-                    tempo_montagem, fase
+                    codigo,
+                    cliente,
+                    setor,
+                    meta_padrao,
+                    tempo_montagem,
+                    fase
                 )
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s)
             """, (
                 dados["codigo"],
                 dados["cliente"],
                 dados["setor"],
                 dados["meta_padrao"],
-                dados.get("tempo_montagem"),
+                dados["tempo_montagem"],
                 dados["fase"]
             ))
         conn.commit()
+
 
 def excluir(codigo):
     with get_db() as conn:
