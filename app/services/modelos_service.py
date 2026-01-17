@@ -11,11 +11,14 @@ def listar():
             "codigo": m["codigo"],
             "cliente": m["cliente"],
             "setor": m["setor"],
-            "meta": float(m["meta"]),
+            "meta": float(m["meta_padrao"]) if m["meta_padrao"] is not None else 0,
+            "pessoas": m["pessoas_padrao"],
+            "tempo_montagem": m["tempo_montagem"],
             "fase": m["fase"]
         }
         for m in modelos
     ]
+
 
 def cadastrar_modelo(dados):
     try:

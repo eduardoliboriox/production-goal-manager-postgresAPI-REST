@@ -38,7 +38,6 @@ def inserir(dados):
                 dados["cliente"],
                 dados["setor"],
                 dados["meta_padrao"],
-                dados["pessoas_padrao"],
                 dados.get("tempo_montagem"),
                 dados["fase"]
             ))
@@ -54,7 +53,7 @@ def atualizar_meta(codigo, nova_meta):
     with get_db() as conn:
         with conn.cursor() as cur:
             cur.execute(
-                "UPDATE modelos SET meta = %s WHERE codigo = %s",
+                "UPDATE modelos SET meta_padrao = %s WHERE codigo = %s",
                 (nova_meta, codigo)
             )
         conn.commit()
