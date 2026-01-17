@@ -9,27 +9,32 @@ def create_app():
     app.register_blueprint(pages.bp)
     app.register_blueprint(api.bp, url_prefix="/api")
 
-    criar_tabelas(app)
+    executar_migracao_forcada(app)  # 👈 ISSO É O QUE FALTAVA
     return app
 
 
-def criar_tabelas(app):
+def executar_migracao_forcada(app):
     with app.app_context():
         from .extensions import get_db
         with get_db() as conn:
             with conn.cursor() as cur:
+
+                # REMOVE COLUNA ERRADA
                 cur.execute("""
-                    CREATE TABLE IF NOT EXISTS modelos (
-                        id SERIAL PRIMARY KEY,
-                        codigo TEXT UNIQUE NOT NULL,
-                        cliente TEXT NOT NULL,
-                        setor TEXT NOT NULL,
-                        meta_padrao NUMERIC,
-                        pessoas_padrao INTEGER,
-                        tempo_montagem NUMERIC,
-                        fase TEXT
-                    );
+                    ALTER TABLE modelos
+                    DROP COLUMN IF EXISTS meta;
                 """)
+
+                # ADICIONA AS CERTAS
+                cur.execute("""
+                    ALTER TABLE modelos
+                    ADD COLUMN IF NOT EXISTS meta_padrao NUMERIC,
+                    ADD COLUMN IF NOT EXISTS pessoas_padrao INTEGER,
+                    ADD COLUMN IF NOT EXISTS tempo_montagem NUMERIC,
+                    ADD COLUMN IF NOT EXISTS fase TEXT;
+                """)
+
             conn.commit()
+
 
 app = create_app()
