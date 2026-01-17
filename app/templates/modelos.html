@@ -10,6 +10,13 @@
   <!-- ===================== TABELA DE MODELOS ===================== -->
   <div class="card mb-4 p-3 shadow-sm">
     <h5 class="mb-3"><i class="bi bi-table"></i> Modelos Cadastrados</h5>
+
+      <!-- 🔎 BUSCA RÁPIDA -->
+  <input
+    id="buscaModelo"
+    class="form-control mb-3"
+    placeholder="🔎 Buscar por código, cliente ou setor"
+  >
     <div id="listaModelos" class="row g-3"></div>
 
   </div>
@@ -24,7 +31,7 @@
 
       <div class="col-md-3">
         <label class="form-label">Selecione o modelo</label>
-        <select class="form-select" name="codigo" required>
+        <select class="form-select" name="codigo" id="selectEditar" required>
           {% for c in codigos %}
             <option value="{{ c }}">{{ c }}</option>
           {% endfor %}
@@ -168,6 +175,16 @@ $(document).ready(function(){
       carregarModelos();
       atualizarSelects();
   });
+
+  $('#buscaModelo').on('input', function () {
+    const termo = $(this).val().toLowerCase();
+
+    $('#listaModelos .col-md-4').each(function () {
+      const texto = $(this).text().toLowerCase();
+      $(this).toggle(texto.includes(termo));
+    });
+  });
+
 
 });
 </script>

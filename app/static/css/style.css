@@ -246,3 +246,14 @@ body {
   margin-top: 6px;
   font-size: 0.95rem;
 }
+
+
+
+.card-modelo .linha strong {
+  color: #495057;
+}
+
+.card-modelo .linha {
+  border-bottom: 1px dashed #e9ecef;
+  padding-bottom: 4px;
+}
