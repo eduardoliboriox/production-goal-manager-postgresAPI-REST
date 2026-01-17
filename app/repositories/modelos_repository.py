@@ -5,17 +5,21 @@ def listar_codigos():
         with conn.cursor() as cur:
             cur.execute("SELECT codigo FROM modelos ORDER BY codigo")
             return [r["codigo"] for r in cur.fetchall()]
-
+        
 def listar_modelos():
     with get_db() as conn:
         with conn.cursor() as cur:
             cur.execute("""
-                SELECT codigo, cliente, setor, meta, fase
+                SELECT
+                    codigo,
+                    cliente,
+                    setor,
+                    meta_padrao AS meta,
+                    fase
                 FROM modelos
                 ORDER BY codigo
             """)
             return cur.fetchall()
-
 
 def inserir(dados):
     with get_db() as conn:
