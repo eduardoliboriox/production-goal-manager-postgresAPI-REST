@@ -71,7 +71,7 @@ body {
   padding: 10px 12px;
   border-radius: 8px;
   text-decoration: none;
-  color: var(--sdesk);
+  color: var(--text);
 }
 
 .sidebar nav a:hover,
