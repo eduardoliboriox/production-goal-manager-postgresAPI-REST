@@ -40,3 +40,27 @@ async function calcularPCP() {
   document.getElementById("resultadoPCP").innerHTML = html;
 }
 
+function limparPCP() {
+  // inputs
+  document.getElementById("totalOp").value = "";
+  document.getElementById("produzido").value = "";
+  document.getElementById("horaInicio").value = "";
+  document.getElementById("metaHora").value = "";
+  document.getElementById("blank").value = "";
+
+  // checkboxes de turno
+  document.querySelectorAll('input[type=checkbox]').forEach(c => {
+    c.checked = false;
+  });
+
+  // refeição volta para "Não"
+  document.getElementById("refeicao").value = "false";
+
+  // limpa resultado
+  document.getElementById("resultadoPCP").innerHTML = "";
+
+  // foco no primeiro campo (UX profissional)
+  document.getElementById("totalOp").focus();
+}
+
+
