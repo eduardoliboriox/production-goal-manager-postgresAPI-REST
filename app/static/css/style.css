@@ -82,8 +82,9 @@ body {
 }
 
 .sidebar .logo img {
-  width: 48px;
-  height: auto;
+  width: 48px;        
+  height: 48px;
+  object-fit: contain;
 }
 
 .sidebar nav a:hover,
