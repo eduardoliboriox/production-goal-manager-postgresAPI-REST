@@ -18,7 +18,8 @@ project/
 │   │
 │   ├─ services/              # regras de negócio
 │   │   ├─ __init__.py        # pacote services (NÃO blueprint)
-│   │   modelos_service.py
+│   │   ├─ modelos_service.py
+│   │   └─ pcp_service.py
 │   │
 │   ├─ repositories/          # acesso ao banco (SQL)
 │   │   ├─ __init__.py        # pacote repositories
@@ -29,14 +30,14 @@ project/
 │   │   ├─ cadastro.html
 │   │   ├─ calcular.html
 │   │   ├─ dashboard.html
-│   │   ├─ modelos.html
-│   │   └─ perdas.html
+│   │   └─ modelos.html
 │   │
 │   └─ static/                # arquivos estáticos
 │       ├─ css/
 │       │   └─ style.css
 │       ├─ js/
-│       │   └─ main.js
+│       │   ├─ main.js
+│       │   └─ pcp.js
 │       ├─ images/
 │       │   ├─ banners/
 │       │   ├─ logos/
