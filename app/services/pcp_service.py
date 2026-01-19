@@ -67,7 +67,7 @@ def calcular_pcp(
             continue
 
         # 🔹 Pula refeição se usuário marcar "Não"
-        if bloco["refeicao"] and considerar_refeicao:
+        if bloco["refeicao"] and not considerar_refeicao:
             continue
 
         ini = _parse_time(bloco["inicio"])
