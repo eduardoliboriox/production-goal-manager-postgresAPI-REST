@@ -32,19 +32,35 @@
 <!-- ================= APP ================= -->
 <div class="app">
 
-  <!-- SIDEBAR DESKTOP -->
-  <aside class="sidebar d-none d-md-flex">
-    <div class="logo">
-      <img src="{{ url_for('static', filename='images/logos/logo-sidebar-desktop.png') }}" alt="Venttos">
-    </div>
+<!-- SIDEBAR DESKTOP -->
+<aside class="sidebar d-none d-md-flex">
+  <div class="logo">
+    <img src="{{ url_for('static', filename='images/logos/logo-sidebar-desktop.png') }}" alt="Venttos">
+  </div>
 
-    <nav>
-      <a href="{{ url_for('pages.dashboard') }}"><i class="bi bi-house"></i> Dashboard</a>
-      <a href="{{ url_for('pages.cadastro') }}"><i class="bi bi-plus-square"></i> Cadastro</a>
-      <a href="{{ url_for('pages.modelos') }}"><i class="bi bi-table"></i> Modelos</a>
-      <a href="{{ url_for('pages.calculo') }}"><i class="bi bi-calculator"></i> Cálculos</a>
-    </nav>
-  </aside>
+  <nav>
+    <a href="{{ url_for('pages.dashboard') }}"
+       class="{% if request.endpoint == 'pages.dashboard' %}active{% endif %}">
+      <i class="bi bi-house"></i> Dashboard
+    </a>
+
+    <a href="{{ url_for('pages.cadastro') }}"
+       class="{% if request.endpoint == 'pages.cadastro' %}active{% endif %}">
+      <i class="bi bi-plus-square"></i> Cadastro
+    </a>
+
+    <a href="{{ url_for('pages.modelos') }}"
+       class="{% if request.endpoint == 'pages.modelos' %}active{% endif %}">
+      <i class="bi bi-table"></i> Modelos
+    </a>
+
+    <a href="{{ url_for('pages.calculo') }}"
+       class="{% if request.endpoint == 'pages.calculo' %}active{% endif %}">
+      <i class="bi bi-calculator"></i> Cálculos
+    </a>
+  </nav>
+</aside>
+
 
   <!-- MAIN -->
   <main class="main">
