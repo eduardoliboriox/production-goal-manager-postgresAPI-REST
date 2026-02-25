@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Offline{% endblock %}
+
+{% block page_title %}
+Offline
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="alert alert-warning mb-3" role="alert">
+    <strong>Você está offline.</strong> Algumas funcionalidades podem não estar disponíveis.
+  </div>
+
+  <div class="card shadow-sm p-3">
+    <h5 class="mb-2">O que você pode fazer agora</h5>
+    <ul class="mb-0">
+      <li>Ver páginas que já foram abertas antes (se estiverem em cache).</li>
+      <li>Verificar sua conexão e tentar novamente.</li>
+    </ul>
+
+    <div class="mt-3 d-flex gap-2">
+      <a class="btn btn-primary" href="/">Tentar voltar ao início</a>
+      <button class="btn btn-outline-secondary" onclick="window.location.reload()">Recarregar</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
