@@ -34,6 +34,22 @@
         </select>
       </div>
 
+      <!-- ✅ NOVO: LINHA -->
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Linha</label>
+        <select class="form-select form-select-lg" name="linha" required>
+          <option value="SMD-01">SMD-01</option>
+          <option value="SMD-02">SMD-02</option>
+          <option value="SMD-03">SMD-03</option>
+          <option value="SMD-04">SMD-04</option>
+          <option value="SMD-05">SMD-05</option>
+          <option value="SMD-06">SMD-06</option>
+          <option value="SMD-07">SMD-07</option>
+          <option value="SMD-08">SMD-08</option>
+          <option value="SMD-09">SMD-09</option>
+        </select>
+      </div>
+
       <div class="col-md-2">
         <label class="form-label fw-semibold">Meta por hora</label>
         <input class="form-control form-control-lg" name="meta_padrao" type="number" required>
@@ -97,7 +113,6 @@ function mostrarMensagemCadastro(texto, tipo='success') {
     msgDiv.innerHTML = ''; // Limpa mensagem antiga
     msgDiv.appendChild(div);
 
-    
     setTimeout(() => {
         const bsAlert = bootstrap.Alert.getOrCreateInstance(div);
         bsAlert.close();
@@ -112,14 +127,14 @@ document.getElementById('cadastroForm').addEventListener('submit', async e => {
     const resp = await fetch('/api/modelos', {
         method: 'POST',
         body: fd,
-        headers: { 'X-Requested-With': 'XMLHttpRequest' } 
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
     });
 
     const data = await resp.json();
 
     mostrarMensagemCadastro(data.mensagem, data.sucesso ? 'success' : 'danger');
 
-     if (data.sucesso) e.target.reset();
+    if (data.sucesso) e.target.reset();
 });
 </script>
 {% endblock %}
