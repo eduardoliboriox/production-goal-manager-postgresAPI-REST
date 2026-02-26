@@ -26,7 +26,7 @@
     <input
       id="buscaModelo"
       class="form-control mb-3"
-      placeholder="🔎 Buscar por código, cliente ou setor"
+      placeholder="🔎 Buscar por código, cliente, setor ou linha"
     >
 
     <div id="listaModelos" class="row g-3"></div>
@@ -48,7 +48,7 @@
       </div>
 
       <div class="col-md-4">
-        <label class="form-label fw-bold">Modelo (código + fase)</label>
+        <label class="form-label fw-bold">Modelo (código + fase + linha)</label>
         <select class="form-select" name="modelo" id="selectEditar" required>
           <option value="">Selecione o cliente primeiro</option>
         </select>
@@ -101,7 +101,7 @@
   </div>
 
       <div class="col-md-4">
-        <label class="form-label fw-bold">Modelo (código + fase)</label>
+        <label class="form-label fw-bold">Modelo (código + fase + linha)</label>
         <select class="form-select" name="modelo" id="selectExcluir" required>
           <option value="">Selecione o cliente primeiro</option>
         </select>
@@ -147,6 +147,7 @@ $(document).ready(function(){
                 </div>
 
                 <div class="linha"><strong>Setor:</strong> ${m.setor}</div>
+                <div class="linha"><strong>Linha:</strong> ${m.linha}</div>
                 <div class="linha"><strong>Meta/hora:</strong> ${m.meta}</div>
                 <div class="linha"><strong>Tempo de montagem:</strong> ${m.tempo_montagem ?? '-'} s</div>
                 <div class="linha"><strong>Placas por blank:</strong> ${m.blank}</div>
@@ -165,7 +166,6 @@ $(document).ready(function(){
     const clientes = [...new Set(modelosCache.map(m => m.cliente))];
     const filtroCliente = $('#filtroCliente');
     const filtroClienteExcluir = $('#filtroClienteExcluir');
-    const selectExcluir = $('#selectExcluir');
 
     filtroCliente.empty().append('<option value="">Selecione</option>');
     clientes.forEach(c => filtroCliente.append(`<option value="${c}">${c}</option>`));
@@ -174,7 +174,6 @@ $(document).ready(function(){
     clientes.forEach(c => {
       filtroClienteExcluir.append(`<option value="${c}">${c}</option>`);
     });
-
   }
 
   $('#filtroCliente').on('change', function(){
@@ -183,12 +182,17 @@ $(document).ready(function(){
 
     selectEditar.empty();
 
+    if (!cliente) {
+      selectEditar.append('<option value="">Selecione o cliente primeiro</option>');
+      return;
+    }
+
     modelosCache
       .filter(m => m.cliente === cliente)
       .forEach(m => {
         selectEditar.append(`
-          <option value="${m.codigo}|${m.fase}">
-            ${m.codigo} — ${m.fase}
+          <option value="${m.codigo}|${m.fase}|${m.linha}">
+            ${m.codigo} — ${m.fase} — ${m.linha}
           </option>
         `);
       });
@@ -209,8 +213,8 @@ $(document).ready(function(){
       .filter(m => m.cliente === cliente)
       .forEach(m => {
         selectExcluir.append(`
-          <option value="${m.codigo}|${m.fase}">
-            ${m.codigo} — ${m.fase}
+          <option value="${m.codigo}|${m.fase}|${m.linha}">
+            ${m.codigo} — ${m.fase} — ${m.linha}
           </option>
         `);
       });
@@ -233,10 +237,11 @@ $(document).ready(function(){
     e.preventDefault();
 
     const fd = new FormData(this);
-    const [codigo, fase] = fd.get('modelo').split('|');
+    const [codigo, fase, linha] = fd.get('modelo').split('|');
 
     fd.append('codigo', codigo);
     fd.append('fase', fase);
+    fd.append('linha', linha);
     fd.delete('modelo');
 
     await fetch('/api/modelos', { method:'PUT', body: fd });
@@ -250,10 +255,11 @@ $(document).ready(function(){
     e.preventDefault();
 
     const fd = new FormData(this);
-    const [codigo, fase] = fd.get('modelo').split('|');
+    const [codigo, fase, linha] = fd.get('modelo').split('|');
 
     fd.append('codigo', codigo);
     fd.append('fase', fase);
+    fd.append('linha', linha);
     fd.delete('modelo');
 
     await fetch('/api/modelos', { method:'DELETE', body: fd });
