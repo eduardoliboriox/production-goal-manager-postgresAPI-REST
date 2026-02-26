@@ -2,11 +2,13 @@
   "name": "Venttos - SMT Production Manager",
   "short_name": "Venttos SMT",
   "description": "Sistema web para gestão e cálculos de produção SMT.",
-  "start_url": "/",
+  "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
   "background_color": "#0e2538",
   "theme_color": "#0e2538",
+  "lang": "pt-BR",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "/static/images/logos/pwa-192.png",

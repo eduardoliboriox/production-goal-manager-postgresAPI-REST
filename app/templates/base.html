@@ -7,7 +7,9 @@
 
   <!-- PWA -->
   <meta name="theme-color" content="#0e2538">
-  <link rel="manifest" href="{{ url_for('pages.manifest') }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/manifest.webmanifest">
   <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/logos/icon-logo-mobile.png') }}">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logos/pwa-192.png') }}">
 
