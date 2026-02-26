@@ -170,25 +170,40 @@ def calcular_meta_smt(tempo_montagem, blank):
     if tempo <= 0 or blank <= 0:
         return {"sucesso": False, "erro": "Valores inválidos"}
 
-    # meta_teorica = capacidade bruta por hora SEM 10% (em BLANKS/H)
-    meta_teorica = 3600 / tempo
+    # =========================
+    # CAPACIDADE TEÓRICA (SEM 10%)
+    # -------------------------
+    # A máquina não "faz" fração de blank:
+    # então a capacidade teórica precisa ser inteira e convertida p/ placas/h.
+    # Ex: tempo=36s => 3600/36 = 100 blanks/h => 100*blank placas/h
+    # Ex: tempo=37s => 3600/37 = 97.29... => 97 blanks/h => 97*blank placas/h
+    # =========================
+    meta_teorica_blanks_float = 3600 / tempo
+    meta_teorica_blanks_int = math.floor(meta_teorica_blanks_float)
+    meta_teorica_placas_int = meta_teorica_blanks_int * blank  # múltiplo de blank, inteiro
 
-    # aplica 10% de perda (em blanks/h)
-    meta_com_perda_placa = meta_teorica * 0.9
-
-    # converte para placas/h (considerando placas por blank)
-    meta_com_perda_blank = meta_com_perda_placa * blank
+    # =========================
+    # META OPERACIONAL (COM 10%)
+    # -------------------------
+    # Mantém exatamente sua lógica atual.
+    # =========================
+    meta_com_perda_blanks = meta_teorica_blanks_float * 0.9
+    meta_com_perda_placas = meta_com_perda_blanks * blank
 
     # arredonda para múltiplos de blank (placas/h)
-    meta_final = math.floor(meta_com_perda_blank / blank) * blank
+    meta_final = math.floor(meta_com_perda_placas / blank) * blank
 
     return {
         "sucesso": True,
         "dados": {
             "meta_hora": meta_final,  # placas/h (operacional, com 10% e múltiplo do blank)
-            "meta_teorica": round(meta_teorica, 2),  # blanks/h (capacidade teórica bruta)
-            "meta_teorica_placas": round(meta_teorica * blank, 2),  # placas/h (capacidade teórica bruta)
-            "meta_com_perda": round(meta_com_perda_blank, 2)  # placas/h (com 10%, antes do múltiplo)
+
+            # teórica (sem 10%) - exibição técnica (inteira e coerente com blank)
+            "meta_teorica_blanks": meta_teorica_blanks_int,     # blanks/h (inteiro)
+            "meta_teorica_placas": meta_teorica_placas_int,     # placas/h (inteiro, múltiplo do blank)
+
+            # (mantido) valor com 10% antes do ajuste de múltiplo (pode ser quebrado)
+            "meta_com_perda": round(meta_com_perda_placas, 2)
         }
     }
 
