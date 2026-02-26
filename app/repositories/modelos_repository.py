@@ -1,10 +1,12 @@
 from app.extensions import get_db
 
+
 def listar_codigos():
     with get_db() as conn:
         with conn.cursor() as cur:
-            cur.execute("SELECT codigo FROM modelos ORDER BY codigo")
+            cur.execute("SELECT DISTINCT codigo FROM modelos ORDER BY codigo")
             return [r["codigo"] for r in cur.fetchall()]
+
 
 def listar_modelos():
     with get_db() as conn:
@@ -14,12 +16,14 @@ def listar_modelos():
                     codigo,
                     cliente,
                     setor,
+                    linha,
                     meta_padrao,
                     tempo_montagem,
                     blank,
                     fase,
                     criado_em
                 FROM modelos
+                ORDER BY criado_em DESC
             """)
             return cur.fetchall()
 
@@ -36,6 +40,7 @@ def buscar_ultimo_modelo():
             row = cur.fetchone()
             return row["codigo"] if row else None
 
+
 def inserir(dados):
     with get_db() as conn:
         with conn.cursor() as cur:
@@ -44,45 +49,39 @@ def inserir(dados):
                     codigo,
                     cliente,
                     setor,
+                    linha,
                     meta_padrao,
                     tempo_montagem,
                     blank,
                     fase
                 )
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """, (
                 dados["codigo"],
                 dados["cliente"],
                 dados["setor"],
+                dados["linha"],
                 dados["meta_padrao"],
-                dados["tempo_montagem"],
+                dados.get("tempo_montagem"),
                 dados["blank"],
                 dados["fase"]
             ))
         conn.commit()
 
 
-def excluir(codigo, fase):
+def excluir(codigo, fase, linha):
     with get_db() as conn:
         with conn.cursor() as cur:
             cur.execute(
-                "DELETE FROM modelos WHERE codigo = %s AND fase = %s",
-                (codigo, fase)
+                "DELETE FROM modelos WHERE codigo = %s AND fase = %s AND linha = %s",
+                (codigo, fase, linha)
             )
         conn.commit()
 
-def atualizar_meta(codigo, nova_meta):
-    with get_db() as conn:
-        with conn.cursor() as cur:
-            cur.execute(
-                "UPDATE modelos SET meta_padrao = %s WHERE codigo = %s",
-                (nova_meta, codigo)
-            )
-        conn.commit()
 
-def atualizar(codigo, fase, campos):
+def atualizar(codigo, fase, linha, campos):
     sets = ", ".join(f"{k} = %s" for k in campos)
-    valores = list(campos.values()) + [codigo, fase]
+    valores = list(campos.values()) + [codigo, fase, linha]
 
     with get_db() as conn:
         with conn.cursor() as cur:
@@ -90,10 +89,8 @@ def atualizar(codigo, fase, campos):
                 f"""
                 UPDATE modelos
                 SET {sets}
-                WHERE codigo = %s AND fase = %s
+                WHERE codigo = %s AND fase = %s AND linha = %s
                 """,
                 valores
             )
         conn.commit()
-
-
