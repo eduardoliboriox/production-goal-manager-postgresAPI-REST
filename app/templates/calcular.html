@@ -255,9 +255,12 @@ document.getElementById('stopTimer').addEventListener('click', () => {
 document.getElementById("smtForm").addEventListener("submit", async e => {
   e.preventDefault();
 
+  const tempo = document.getElementById("tempoMontagem").value;
+  const blank = document.getElementById("blankSMT").value;
+
   const fd = new FormData();
-  fd.append("tempo_montagem", document.getElementById("tempoMontagem").value);
-  fd.append("blank", document.getElementById("blankSMT").value);
+  fd.append("tempo_montagem", tempo);
+  fd.append("blank", blank);
 
   const r = await fetch("/api/smt/calcular_meta", { method: "POST", body: fd });
   const data = await r.json();
@@ -268,10 +271,16 @@ document.getElementById("smtForm").addEventListener("submit", async e => {
     return;
   }
 
+  const metaOperacional = data.dados.meta_hora;
+  const capacidadePlacas = data.dados.meta_teorica_placas ?? null;
+  const capacidadeBlanks = data.dados.meta_teorica ?? null;
+
+  // Fallback (caso ainda não tenha deployado o backend novo)
+  const capacidadeFallback = capacidadePlacas ?? (capacidadeBlanks ? (Number(capacidadeBlanks) * Number(blank)) : null);
+
   document.getElementById("resultadoSMT").innerHTML = `
-    Meta Operacional: <strong>${data.dados.meta_hora}</strong><br>
-    Capacidade Teórica da Máquina: <strong>${data.dados.meta_teorica}</strong><br>
-    
+    Meta Operacional: <strong>${metaOperacional}</strong><br>
+    Capacidade Teórica da Máquina: <strong>${capacidadeFallback ?? '-'}</strong><br>
   `;
 });
 </script>
