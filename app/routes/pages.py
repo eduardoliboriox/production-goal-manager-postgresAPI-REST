@@ -47,16 +47,20 @@ def offline():
 
 @bp.route("/manifest.webmanifest")
 def manifest():
-    return send_from_directory(
+    response = send_from_directory(
         current_app.static_folder,
         "manifest.webmanifest",
         mimetype="application/manifest+json"
     )
+    response.headers["Cache-Control"] = "no-cache"
+    return response
 
 @bp.route("/sw.js")
 def sw():
-    return send_from_directory(
+    response = send_from_directory(
         current_app.static_folder,
         "sw.js",
         mimetype="application/javascript"
     )
+    response.headers["Cache-Control"] = "no-cache"
+    return response
